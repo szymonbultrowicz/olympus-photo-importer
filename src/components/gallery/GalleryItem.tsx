@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { Image, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import { downloadFile } from '../../utils/photo-downloader';
 import { Photo } from '../../utils/photo-info-fetcher';
+import GalleryItemMenu from './GalleryItemMenu';
 
 const host = 'http://10.0.2.2:8000/';
 
 export default ({ photo }: {photo: Photo})=> {
     const uri = host + 'get_thumbnail.cgi?DIR=' + photo.path + photo.name + "." + photo.instances[0].type;
+
+    const [modalVisible, setModalVisible] = useState(false);
     
     // const [style, setStyle] = useState(styles.thumbnail);
   
@@ -21,11 +24,12 @@ export default ({ photo }: {photo: Photo})=> {
     // }, []);
   
     const onPress = () => {
-      downloadFile(photo, photo.instances[0].type, host);
+      setModalVisible(true);
     };
   
     return (
       <View style={styles.container}>
+        <GalleryItemMenu photo={photo} visible={modalVisible} />
         <TouchableHighlight onPress={onPress} underlayColor={'#ccc'}>
           <View style={styles.innerContainer}>
             <Text>{photo.name}</Text>
@@ -56,5 +60,5 @@ export default ({ photo }: {photo: Photo})=> {
     thumbnail: {
       width: 100,
       height: 100,
-    }
+    },
   });
