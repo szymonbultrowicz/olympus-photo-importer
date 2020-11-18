@@ -47,8 +47,8 @@ const mergeInstances = (photos: Photo[]) => {
         .sort(modifiedTimeComparator);
 };
 
-export const fetchPhotoInfos = async () => {
-    const html = await (await fetch('http://10.0.2.2:8000/DCIM/100OLYMP/')).text();
+export const fetchPhotoInfos = async (host: string) => {
+    const html = await (await fetch(`${host}DCIM/100OLYMP/`)).text();
     const matches = html.match(/wlansd\[\d+\].*/g);
     if (!matches) {
         return [];
