@@ -1,7 +1,8 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import os
 import re
+import sys
 
 q = os.environ.get("QUERY_STRING", "No Query String in url")
 file = re.compile('DIR=(.*)').search(q).group(1)
@@ -12,4 +13,5 @@ print("Content-Length: " + str(os.stat(jpg_file).st_size))
 print("")
 
 with open(jpg_file, 'rb') as f:
-    print(f.read())
+    sys.stdout.flush()
+    sys.stdout.buffer.write(f.read())
